@@ -1,0 +1,11 @@
+.profile__container {
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+}
+
+.profile__container:hover {
+    background-image: url(../../../images/Vectoravatar.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+}

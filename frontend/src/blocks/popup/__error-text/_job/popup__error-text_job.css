@@ -1,0 +1,12 @@
+.popup__error-text_job {
+    position: absolute;
+    top: 200px;
+    left: 36px;
+}
+
+@media screen and (max-width: 456px) {
+    .popup__error-text_job {
+        top: 212px;
+        left: 20px;
+    }
+}

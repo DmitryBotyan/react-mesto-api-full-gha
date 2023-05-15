@@ -1,0 +1,11 @@
+.elements__like {
+    padding: 0;
+    position: absolute;
+    bottom: 28px;
+    right: 20px;
+    background-color: rgba(255, 255, 255, 0);
+    background-image: url(../../../images/Vector-min.svg);
+    border: none;
+    width: 22px;
+    height: 19px;
+}

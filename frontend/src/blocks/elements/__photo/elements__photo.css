@@ -1,0 +1,12 @@
+.elements__photo {
+    width: 100%;
+    height: 282px;
+    border-radius: 10px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    object-fit: cover;
+    cursor: pointer;
+    background-color: black;
+    color: white;
+    display: block;
+}
