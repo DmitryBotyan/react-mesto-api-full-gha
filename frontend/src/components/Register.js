@@ -23,7 +23,7 @@ export default function Register({ onRegister }) {
       <button className="auth__button button">Зарегистрироваться</button>
       <span className="auth__description">
         Уже зарегистрированы?{" "}
-        <Link to='/signin' className="header__link button">Войти</Link>
+        <Link to='/sign-in' className="header__link button">Войти</Link>
       </span>
     </form>
   );

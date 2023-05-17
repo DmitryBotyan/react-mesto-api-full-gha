@@ -1,6 +1,4 @@
-import { configApi } from "./constants";
-
-const BASE_URL = "https://mesto.nomoreparties.co"
+const BASE_URL = "https://api.mestoo.students.nomoredomains.monster"
 
 class Api {
   constructor({ id, headers }, url) {
@@ -18,7 +16,7 @@ class Api {
   }
 
   getCardList() {
-    return fetch(`${this._url}/v1/${this._id}/cards`, {
+    return fetch(`${this._url}/cards`, {
       headers: this._headers,
     }).then((res) => {
       return this._getResponseData(res);
@@ -26,7 +24,7 @@ class Api {
   }
 
   addNewCard({ name, link }) {
-    return fetch(`${this._url}/v1/${this._id}/cards`, {
+    return fetch(`${this._url}/cards`, {
       headers: this._headers,
       method: "POST",
       body: JSON.stringify({
@@ -39,7 +37,7 @@ class Api {
   }
   deleteCard(cardId) {
     return fetch(
-      `${this._url}/v1/${this._id}/cards/${cardId}`,
+      `${this._url}/cards/${cardId}`,
       {
         headers: this._headers,
         method: "DELETE",
@@ -50,7 +48,7 @@ class Api {
   }
   changeLikeCardStatusletLike(cardId, isLiked) {
     return fetch(
-      `${this._url}/v1/${this._id}/cards/${cardId}/likes`,
+      `${this._url}/cards/${cardId}/likes`,
       !isLiked
         ? {
             headers: this._headers,
@@ -65,14 +63,14 @@ class Api {
     });
   }
   getUserInform() {
-    return fetch(`${this._url}/v1/${this._id}/users/me`, {
+    return fetch(`${this._url}/users/me`, {
       headers: this._headers,
     }).then((res) => {
       return this._getResponseData(res);
     });
   }
   editUserInfo({ name, about }) {
-    return fetch(`${this._url}/v1/${this._id}/users/me`, {
+    return fetch(`${this._url}/users/me`, {
       headers: this._headers,
       method: "PATCH",
       body: JSON.stringify({
@@ -85,7 +83,7 @@ class Api {
   }
   updateProfilePhoto({ avatar }) {
     return fetch(
-      `${this._url}/v1/${this._id}/users/me/avatar`,
+      `${this._url}/users/me/avatar`,
       {
         headers: this._headers,
         method: "PATCH",
@@ -99,4 +97,4 @@ class Api {
   }
 }
 
-export const api = new Api(configApi, BASE_URL);
+export const api = new Api(BASE_URL);

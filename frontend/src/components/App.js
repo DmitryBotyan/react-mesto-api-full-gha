@@ -169,9 +169,10 @@ export function App() {
 
   const [logedIn, setLoggedIn] = React.useState(false);
 
-  const handleRegister = ({ password, email }) => {
+  const handleRegister = (values) => {
+    console.log(values)
     auth
-      .register({ password, email })
+      .register(values)
       .then((res) => {
         setSuccess(true);
         setInfoTooltipOpen(true);
@@ -189,6 +190,7 @@ export function App() {
       .login({ password, email })
       .then((data) => {
         localStorage.setItem("jwt", data.token);
+        console.log(data.token)
         setLoggedIn(true);
         navigate("/", { replace: true });
       })
@@ -232,7 +234,7 @@ export function App() {
                   <span className="header__email">
                     {localStorage.getItem("email")}
                   </span>
-                  <Link to='/signin' className="header__link button" onClick={handleSignOut}>Выйти</Link>
+                  <Link to='/sign-in' className="header__link button" onClick={handleSignOut}>Выйти</Link>
                 </Header>
 
                 <Main
@@ -283,18 +285,18 @@ export function App() {
           element={
             <div className="registerContainer">
               <Header>
-                <Link to='/signin' className="header__link button">Войти</Link>
+                <Link to='/sign-in' className="header__link button">Войти</Link>
               </Header>
               <Register onRegister={handleRegister} />
             </div>
           }
         />
         <Route
-          path="/signin"
+          path="/sign-in"
           element={
             <div className="loginContainer">
               <Header>
-                <Link to='/signup' className="header__link button">Регистрация</Link>
+                <Link to='/sign-up' className="header__link button">Регистрация</Link>
               </Header>
               <Login onLogin={handleLogin} />
             </div>
