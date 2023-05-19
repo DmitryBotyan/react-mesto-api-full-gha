@@ -3,6 +3,7 @@ const allowedCors = [
   'http://praktikum.tk',
   'http://localhost:3001',
   'http://localhost:3000',
+  'https://mestoo.students.nomoredomains.monster',
 ];
 
 // eslint-disable-next-line consistent-return

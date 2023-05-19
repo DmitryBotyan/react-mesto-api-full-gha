@@ -8,8 +8,8 @@
 
 ## Ссылки на проект
 
-IP-адрес x.x.x.x
+IP-адрес 158.160.43.27
 
-Frontend https://...
+Frontend https://mestoo.students.nomoredomains.monster
 
-Backend https://...
+Backend https://api.mestoo.students.nomoredomains.monster
