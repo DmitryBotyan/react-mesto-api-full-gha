@@ -1,8 +1,8 @@
-const BASE_URL = "https://api.mestoo.students.nomoredomains.monster"
+import { configApi } from "./constants";
+const BASE_URL = "http://localhost:3000"
 
 class Api {
-  constructor({ id, headers }, url) {
-    this._id = id;
+  constructor({ headers }, url) {
     this._headers = headers;
     this._url = url
   }
@@ -18,6 +18,7 @@ class Api {
   getCardList() {
     return fetch(`${this._url}/cards`, {
       headers: this._headers,
+      method: "GET"
     }).then((res) => {
       return this._getResponseData(res);
     });
@@ -62,13 +63,15 @@ class Api {
       return this._getResponseData(res);
     });
   }
-  getUserInform() {
-    return fetch(`${this._url}/users/me`, {
-      headers: this._headers,
+  getUserInform(token) {
+    return fetch(`${BASE_URL}/users/me`, {
+      method: "GET",
+      headers: this._headers
     }).then((res) => {
       return this._getResponseData(res);
     });
   }
+  
   editUserInfo({ name, about }) {
     return fetch(`${this._url}/users/me`, {
       headers: this._headers,
@@ -97,4 +100,4 @@ class Api {
   }
 }
 
-export const api = new Api(BASE_URL);
+export const api = new Api(configApi, BASE_URL);

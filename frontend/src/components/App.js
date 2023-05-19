@@ -38,27 +38,6 @@ export function App() {
 
   const [cards, setCards] = React.useState([]);
 
-  React.useEffect(() => {
-    api
-      .getUserInform()
-      .then((data) => {
-        setCurrentUser({
-          userName: data.name,
-          userDescription: data.about,
-          userAvatar: data.avatar,
-          id: data._id,
-        });
-      })
-      .catch((err) => console.log(err));
-
-    api
-      .getCardList()
-      .then((data) => {
-        setCards(data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
-
   const handleCardLike = (card) => {
     const isLiked = card.likes.some((i) => i._id === currentUser.id);
 
@@ -170,13 +149,12 @@ export function App() {
   const [logedIn, setLoggedIn] = React.useState(false);
 
   const handleRegister = (values) => {
-    console.log(values)
     auth
       .register(values)
       .then((res) => {
         setSuccess(true);
         setInfoTooltipOpen(true);
-        navigate("/", { replace: true });
+        navigate("/sign-in", { replace: true });
       })
       .catch((err) => {
         setSuccess(false);
@@ -190,7 +168,6 @@ export function App() {
       .login({ password, email })
       .then((data) => {
         localStorage.setItem("jwt", data.token);
-        console.log(data.token)
         setLoggedIn(true);
         navigate("/", { replace: true });
       })
@@ -209,7 +186,7 @@ export function App() {
             if (res) {
               setLoggedIn(true);
               navigate("/", { replace: true });
-              localStorage.setItem("email", res.data.email);
+              localStorage.setItem("email", res.email);
             }
           })
           .catch((err) => console.log(err));
@@ -221,6 +198,27 @@ export function App() {
   const handleSignOut = () => {
     localStorage.removeItem("jwt");
   };
+
+  React.useEffect(() => {
+    api
+      .getUserInform()
+      .then((data) => {
+        setCurrentUser({
+          userName: data.name,
+          userDescription: data.about,
+          userAvatar: data.avatar,
+          id: data._id,
+        });
+      })
+      .catch((err) => console.log(err));
+
+    api
+      .getCardList()
+      .then((data) => {
+        setCards(data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <div className="page">

@@ -5,20 +5,20 @@ const router = require('./routes');
 const { errors } = require('./node_modules/celebrate');
 const { DocumentNotFoundError } = require('./middlewares/error');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const cors = require('./middlewares/cors');
+const { cors } = require('./middlewares/cors');
 
 const app = express();
 
 mongoose
   .connect('mongodb://127.0.0.1/mestodb');
 
-app.use(cors());
-
 app.use(express.json());
 
 app.use(bodyparser.urlencoded({ extended: true }));
 
 app.use(requestLogger);
+
+app.use(cors);
 
 app.use(router);
 

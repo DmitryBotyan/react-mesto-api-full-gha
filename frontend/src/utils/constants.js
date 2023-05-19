@@ -7,9 +7,8 @@ export const validationConfig = {
 };
 
 export const configApi = {
-  id: "cohort-58",
   headers: {
     "Content-Type": "application/json",
-    authorization: "0570ef48-f4e2-4392-b90c-178e3b6f8dfe",
+    Authorization: `Bearer ${localStorage.getItem("jwt")}`
   },
 };
