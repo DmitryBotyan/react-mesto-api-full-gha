@@ -23,7 +23,7 @@ export default function Card({ card, onImageClick, onCardLike, onCardDelete }) {
   const isLiked = card.likes.some((i) => i._id === userContext.id);
 
   const cardLikeButtonClassName = `elements__like button ${
-    isLiked && "elements__like_active"
+    isLiked ? "elements__like_active" : ''
   }`;
 
   return (
