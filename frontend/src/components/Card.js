@@ -6,11 +6,14 @@ export default function Card({ card, onImageClick, onCardLike, onCardDelete }) {
 
   const userContext = React.useContext(CurrentUserContext);
 
+  const isLiked = card.likes.some((i) => i._id === userContext.id);
+
   const handleClick = () => {
     onImageClick(card);
   };
 
   const handleLike = () => {
+    console.log(isLiked)
     onCardLike(card)
   }
 
@@ -19,8 +22,6 @@ export default function Card({ card, onImageClick, onCardLike, onCardDelete }) {
   }
 
   const isOwn = card.owner._id === userContext.id;
-
-  const isLiked = card.likes.some((i) => i._id === userContext.id);
 
   const cardLikeButtonClassName = `elements__like button ${
     isLiked ? "elements__like_active" : ''
