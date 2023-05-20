@@ -24,7 +24,7 @@ export default function Card({ card, onImageClick, onCardLike, onCardDelete }) {
   const isOwn = card.owner._id === userContext.id;
 
   const cardLikeButtonClassName = `elements__like button ${
-    isLiked ? "elements__like_active" : ''
+    isLiked ? '' : 'elements__like_active'
   }`;
 
   return (
