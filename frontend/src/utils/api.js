@@ -4,7 +4,7 @@ const BASE_URL = "https://api.mestoo.students.nomoredomains.monster";
 class Api {
   constructor({ headers }, url) {
     this._headers = headers;
-    this._url = url
+    this._url = url;
   }
 
   _getResponseData(res) {
@@ -18,7 +18,7 @@ class Api {
   getCardList() {
     return fetch(`${this._url}/cards`, {
       headers: this._headers,
-      method: "GET"
+      method: "GET",
     }).then((res) => {
       return this._getResponseData(res);
     });
@@ -29,22 +29,18 @@ class Api {
       headers: this._headers,
       method: "POST",
       body: JSON.stringify({
-        name,
-        link,
+        name, link
       }),
     }).then((res) => {
       return this._getResponseData(res);
     });
   }
-  
+
   deleteCard(cardId) {
-    return fetch(
-      `${this._url}/cards/${cardId}`,
-      {
-        headers: this._headers,
-        method: "DELETE",
-      }
-    ).then((res) => {
+    return fetch(`${this._url}/cards/${cardId}`, {
+      headers: this._headers,
+      method: "DELETE",
+    }).then((res) => {
       return this._getResponseData(res);
     });
   }
@@ -67,12 +63,12 @@ class Api {
   getUserInform(token) {
     return fetch(`${BASE_URL}/users/me`, {
       method: "GET",
-      headers: this._headers
+      headers: this._headers,
     }).then((res) => {
       return this._getResponseData(res);
     });
   }
-  
+
   editUserInfo({ name, about }) {
     return fetch(`${this._url}/users/me`, {
       headers: this._headers,
@@ -86,16 +82,13 @@ class Api {
     });
   }
   updateProfilePhoto({ avatar }) {
-    return fetch(
-      `${this._url}/users/me/avatar`,
-      {
-        headers: this._headers,
-        method: "PATCH",
-        body: JSON.stringify({
-          avatar,
-        }),
-      }
-    ).then((res) => {
+    return fetch(`${this._url}/users/me/avatar`, {
+      headers: this._headers,
+      method: "PATCH",
+      body: JSON.stringify({
+        avatar,
+      }),
+    }).then((res) => {
       return this._getResponseData(res);
     });
   }
