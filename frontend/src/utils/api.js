@@ -36,6 +36,7 @@ class Api {
       return this._getResponseData(res);
     });
   }
+  
   deleteCard(cardId) {
     return fetch(
       `${this._url}/cards/${cardId}`,

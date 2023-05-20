@@ -3,7 +3,6 @@ const bodyparser = require('body-parser');
 const mongoose = require('mongoose');
 const router = require('./routes');
 const { errors } = require('./node_modules/celebrate');
-const { DocumentNotFoundError } = require('./middlewares/error');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { cors } = require('./middlewares/cors');
 
@@ -25,12 +24,6 @@ app.use(router);
 app.use(errorLogger);
 
 app.use(errors());
-
-app.use((err, req, res, next) => {
-  if (err.status === 404) {
-    next(new DocumentNotFoundError('Страница не найдена'));
-  }
-});
 
 app.use((err, req, res, next) => {
   const { statusCode = 500, message } = err;

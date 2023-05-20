@@ -24,7 +24,8 @@ export function App() {
   const [isZoomImagePopupOpen, setZoomImagePopupOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({});
   const [isInfoTooltipOpen, setInfoTooltipOpen] = React.useState(false);
-
+  const [logedIn, setLoggedIn] = React.useState(false);
+  const navigate = useNavigate();
   const [currentUser, setCurrentUser] = React.useState({
     userName: "",
     userDescription: "",
@@ -130,10 +131,10 @@ export function App() {
       });
   };
 
-  const handleAddPlaceSubmit = (data) => {
+  const handleAddPlaceSubmit = ({ name, link }) => {
     setIsLoading(true);
     api
-      .addNewCard(data)
+      .addNewCard({ name, link })
       .then((newCard) => {
         setCards([newCard, ...cards]);
         closeAllPopups();
@@ -143,10 +144,6 @@ export function App() {
         setIsLoading(false);
       });
   };
-
-  const navigate = useNavigate();
-
-  const [logedIn, setLoggedIn] = React.useState(false);
 
   const handleRegister = (values) => {
     auth
