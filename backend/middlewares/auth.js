@@ -10,7 +10,7 @@ const auth = async (req, res, next) => {
     const { authorization } = req.headers;
 
     if (!authorization || !authorization.startsWith('Bearer ')) {
-      return new AuthError('Необходима авторизация');
+      return next(new AuthError('Необходима авторизация'));
     }
 
     const token = authorization.replace('Bearer ', '');

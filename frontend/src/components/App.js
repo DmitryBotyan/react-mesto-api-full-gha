@@ -24,24 +24,42 @@ export function App() {
   const [isZoomImagePopupOpen, setZoomImagePopupOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({});
   const [isInfoTooltipOpen, setInfoTooltipOpen] = React.useState(false);
-  const [logedIn, setLoggedIn] = React.useState(false);
-  const navigate = useNavigate();
+  const [loggedIn, setLoggedIn] = React.useState(false);
   const [currentUser, setCurrentUser] = React.useState({
     userName: "",
     userDescription: "",
     userAvatar: "",
     id: "",
   });
-
   const [isSuccess, setSuccess] = React.useState(false);
-
   const [isLoading, setIsLoading] = React.useState(false);
-
   const [cards, setCards] = React.useState([]);
+
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    api
+      .getUserInform()
+      .then((data) => {
+        setCurrentUser({
+          userName: data.name,
+          userDescription: data.about,
+          userAvatar: data.avatar,
+          id: data._id,
+        });
+      })
+      .catch((err) => console.log(err));
+
+    api
+      .getCardList()
+      .then((data) => {
+        setCards(data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   const handleCardLike = (card) => {
     const isLiked = card.likes.some((i) => i._id === currentUser.id);
-
     api
       .changeLikeCardStatusletLike(card._id, isLiked)
       .then((newCard) => {
@@ -72,27 +90,6 @@ export function App() {
       };
     }
   }, [isOpen]);
-
-  React.useEffect(() => {
-    api
-      .getUserInform()
-      .then((data) => {
-        setCurrentUser({
-          userName: data.name,
-          userDescription: data.about,
-          userAvatar: data.avatar,
-          id: data._id,
-        });
-      })
-      .catch((err) => console.log(err));
-
-    api
-      .getCardList()
-      .then((data) => {
-        setCards(data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
 
   const handleCardClick = (card) => {
     setSelectedCard(card);
@@ -223,7 +220,7 @@ export function App() {
         <Route
           path="/"
           element={
-            <ProtectedRoute loggedIn={logedIn}>
+            <ProtectedRoute loggedIn={loggedIn}>
               <CurrentUserContext.Provider value={currentUser}>
                 <Header>
                   <span className="header__email">
