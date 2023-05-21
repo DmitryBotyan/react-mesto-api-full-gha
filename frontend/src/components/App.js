@@ -37,8 +37,9 @@ export function App() {
 
   const navigate = useNavigate();
 
-  React.useEffect(() => {
-    api
+  React.useEffect(()=>{
+    if (loggedIn) {
+      api
       .getUserInform()
       .then((data) => {
         setCurrentUser({
@@ -56,10 +57,11 @@ export function App() {
         setCards(data);
       })
       .catch((err) => console.log(err));
-  }, []);
+    }
+},[loggedIn])
 
   const handleCardLike = (card) => {
-    const isLiked = card.likes.some((i) => i._id === currentUser.id);
+    const isLiked = card.likes.some((i) => i === currentUser.id);
     api
       .changeLikeCardStatusletLike(card._id, isLiked)
       .then((newCard) => {
