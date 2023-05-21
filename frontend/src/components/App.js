@@ -73,6 +73,27 @@ export function App() {
     }
   }, [isOpen]);
 
+  React.useEffect(() => {
+    api
+      .getUserInform()
+      .then((data) => {
+        setCurrentUser({
+          userName: data.name,
+          userDescription: data.about,
+          userAvatar: data.avatar,
+          id: data._id,
+        });
+      })
+      .catch((err) => console.log(err));
+
+    api
+      .getCardList()
+      .then((data) => {
+        setCards(data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   const handleCardClick = (card) => {
     setSelectedCard(card);
     setZoomImagePopupOpen(true);
@@ -195,27 +216,6 @@ export function App() {
   const handleSignOut = () => {
     localStorage.removeItem("jwt");
   };
-
-  React.useEffect(() => {
-    api
-      .getUserInform()
-      .then((data) => {
-        setCurrentUser({
-          userName: data.name,
-          userDescription: data.about,
-          userAvatar: data.avatar,
-          id: data._id,
-        });
-      })
-      .catch((err) => console.log(err));
-
-    api
-      .getCardList()
-      .then((data) => {
-        setCards(data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
 
   return (
     <div className="page">

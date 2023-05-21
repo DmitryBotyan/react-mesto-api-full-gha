@@ -7,6 +7,10 @@ export default function Card({ card, onImageClick, onCardLike, onCardDelete }) {
 
   const isLiked = card.likes.some((i) => i._id === userContext.id);
 
+  const cardLikeButtonClassName = `elements__like button ${
+    isLiked ? "elements__like_active" : ""
+  }`;
+
   const isOwn = card.owner._id === userContext.id;
 
   const handleClick = () => {
@@ -39,9 +43,7 @@ export default function Card({ card, onImageClick, onCardLike, onCardDelete }) {
       />
       <h2 className="elements__title">{card.name}</h2>
       <button
-        className={`elements__like button ${
-          isLiked ? "elements__like_active" : ""
-        }`}
+        className={cardLikeButtonClassName}
         type="button"
         onClick={handleLike}
       ></button>

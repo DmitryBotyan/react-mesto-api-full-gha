@@ -1,5 +1,5 @@
 import { configApi } from "./constants";
-const BASE_URL = "https://api.mestoo.students.nomoredomains.monster";
+const BASE_URL = "http://localhost:3000";
 
 class Api {
   constructor({ headers }, url) {
