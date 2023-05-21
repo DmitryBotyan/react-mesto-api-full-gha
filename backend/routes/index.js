@@ -10,15 +10,6 @@ const {
 } = require('../validation/validation');
 const { DocumentNotFoundError } = require('../middlewares/error');
 
-router.use('*', (res, req, next) => {
-  next(new DocumentNotFoundError('Страница не найдена'));
-});
-
-router.get('/crash-test', () => {
-  setTimeout(() => {
-    throw new Error('Сервер сейчас упадёт');
-  }, 0);
-});
 router.post('/signin', loginValidation, login);
 router.post('/signup', createUserValidation, createUser);
 router.get('/crash-test', () => {
