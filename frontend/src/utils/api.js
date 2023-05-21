@@ -29,7 +29,7 @@ class Api {
       headers: this._headers,
       method: "POST",
       body: JSON.stringify({
-        name, link
+        name, link,
       }),
     }).then((res) => {
       return this._getResponseData(res);
@@ -44,6 +44,7 @@ class Api {
       return this._getResponseData(res);
     });
   }
+
   changeLikeCardStatusletLike(cardId, isLiked) {
     return fetch(
       `${this._url}/cards/${cardId}/likes`,
@@ -60,6 +61,7 @@ class Api {
       return this._getResponseData(res);
     });
   }
+  
   getUserInform(token) {
     return fetch(`${BASE_URL}/users/me`, {
       method: "GET",

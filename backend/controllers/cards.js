@@ -10,7 +10,7 @@ module.exports.createCard = (req, res, next) => {
     name, link, owner: req.user._id,
   })
     .then((newCard) => {
-      res.statusCode(201).send(newCard);
+      res.status(201).send(newCard);
     })
     .catch((err) => {
       if (err instanceof ValidationError) {
