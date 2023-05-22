@@ -5,13 +5,13 @@ import React from "react";
 export default function Card({ card, onImageClick, onCardLike, onCardDelete }) {
   const userContext = React.useContext(CurrentUserContext);
 
+  const isOwn = card.owner === userContext.id;
+
   const isLiked = card.likes.some((i) => i === userContext.id);
 
   const cardLikeButtonClassName = `elements__like button ${
     isLiked ? "elements__like_active" : ""
   }`;
-
-  const isOwn = card.owner._id === userContext.id;
 
   const handleClick = () => {
     onImageClick(card);

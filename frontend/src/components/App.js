@@ -16,8 +16,7 @@ import * as auth from "../utils/auth";
 import { InfoTooltip } from "./InfoTooltip.js";
 import infoImage from "../images/Union.svg";
 import infoImageError from "../images/UnionError.svg";
-import { configApi, BASE_URL } from "../utils/constants.js";
-
+import { BASE_URL } from "../utils/constants.js";
 export function App() {
   const [isEditPopupOpen, setEditPopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
@@ -35,6 +34,13 @@ export function App() {
   const [isSuccess, setSuccess] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   const [cards, setCards] = React.useState([]);
+
+  const configApi = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("jwt")}`
+    },
+  };
 
   const api = new Api(configApi, BASE_URL);
 
@@ -59,9 +65,11 @@ export function App() {
     auth
       .login({ password, email })
       .then((data) => {
-        localStorage.setItem("jwt", data.token);
-        setLoggedIn(true);
-        navigate("/", { replace: true });
+        if (data) {
+          localStorage.setItem("jwt", data.token);
+          setLoggedIn(true);
+          navigate("/", { replace: true });
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -111,6 +119,15 @@ React.useEffect(() => {
   tokenCheck();
 }, [navigate]);
 
+const handleCardDelete = (card) => {
+  api
+    .deleteCard(card._id)
+    .then(() => {
+      setCards((state) => state.filter((item) => item._id !== card._id));
+    })
+    .catch((err) => console.log(err));
+};
+
   const handleCardLike = (card) => {
     const isLiked = card.likes.some((i) => i === currentUser.id);
     api
@@ -147,15 +164,6 @@ React.useEffect(() => {
   const handleCardClick = (card) => {
     setSelectedCard(card);
     setZoomImagePopupOpen(true);
-  };
-
-  const handleCardDelete = (card) => {
-    api
-      .deleteCard(card._id)
-      .then(() => {
-        setCards((state) => state.filter((item) => item._id !== card._id));
-      })
-      .catch((err) => console.log(err));
   };
 
   const closeAllPopups = () => {

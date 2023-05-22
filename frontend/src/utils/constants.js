@@ -6,11 +6,4 @@ export const validationConfig = {
   errorClass: "popup__error-text_visible",
 };
 
-export const configApi = {
-  headers: {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${localStorage.getItem("jwt")}`
-  },
-};
-
 export const BASE_URL = "https://api.mestoo.students.nomoredomains.monster";

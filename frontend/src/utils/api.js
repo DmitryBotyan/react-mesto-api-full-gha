@@ -17,6 +17,7 @@ export class Api {
       headers: this._headers,
       method: "GET",
     }).then((res) => {
+      console.log(this._headers)
       return this._getResponseData(res);
     });
   }
