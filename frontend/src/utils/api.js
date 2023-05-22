@@ -1,7 +1,4 @@
-import { configApi } from "./constants";
-const BASE_URL = "https://api.mestoo.students.nomoredomains.monster";
-
-class Api {
+export class Api {
   constructor({ headers }, url) {
     this._headers = headers;
     this._url = url;
@@ -62,8 +59,8 @@ class Api {
     });
   }
   
-  getUserInform(token) {
-    return fetch(`${BASE_URL}/users/me`, {
+  getUserInform() {
+    return fetch(`${this._url}/users/me`, {
       method: "GET",
       headers: this._headers,
     }).then((res) => {
@@ -95,5 +92,3 @@ class Api {
     });
   }
 }
-
-export const api = new Api(configApi, BASE_URL);

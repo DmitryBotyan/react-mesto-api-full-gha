@@ -3,7 +3,7 @@ import Main from "./Main.js";
 import Footer from "./Footer.js";
 import React from "react";
 import ImagePopup from "./ImagePopup.js";
-import { api } from "../utils/api.js";
+import { Api } from "../utils/api.js";
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 import EditProfilePopup from "./EditProfilePopup.js";
 import { EditAvatarPopup } from "./EditAvatarPopup.js";
@@ -16,6 +16,7 @@ import * as auth from "../utils/auth";
 import { InfoTooltip } from "./InfoTooltip.js";
 import infoImage from "../images/Union.svg";
 import infoImageError from "../images/UnionError.svg";
+import { configApi, BASE_URL } from "../utils/constants.js";
 
 export function App() {
   const [isEditPopupOpen, setEditPopupOpen] = React.useState(false);
@@ -35,7 +36,37 @@ export function App() {
   const [isLoading, setIsLoading] = React.useState(false);
   const [cards, setCards] = React.useState([]);
 
+  const api = new Api(configApi, BASE_URL);
+
   const navigate = useNavigate();
+
+  const handleRegister = (values) => {
+    auth
+      .register(values)
+      .then((res) => {
+        setSuccess(true);
+        setInfoTooltipOpen(true);
+        navigate("/sign-in", { replace: true });
+      })
+      .catch((err) => {
+        setSuccess(false);
+        setInfoTooltipOpen(true);
+        console.log(err);
+      });
+  };
+
+  const handleLogin = ({ password, email }) => {
+    auth
+      .login({ password, email })
+      .then((data) => {
+        localStorage.setItem("jwt", data.token);
+        setLoggedIn(true);
+        navigate("/", { replace: true });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   React.useEffect(()=>{
     if (loggedIn) {
@@ -58,7 +89,27 @@ export function App() {
       })
       .catch((err) => console.log(err));
     }
+// eslint-disable-next-line react-hooks/exhaustive-deps
 },[loggedIn])
+
+React.useEffect(() => {
+  const tokenCheck = () => {
+    if (localStorage.getItem("jwt")) {
+      const jwt = localStorage.getItem("jwt");
+      auth
+        .checkToken(jwt)
+        .then((res) => {
+          if (res) {
+            setLoggedIn(true);
+            navigate("/", { replace: true });
+            localStorage.setItem("email", res.email);
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+  };
+  tokenCheck();
+}, [navigate]);
 
   const handleCardLike = (card) => {
     const isLiked = card.likes.some((i) => i === currentUser.id);
@@ -164,53 +215,6 @@ export function App() {
         setIsLoading(false);
       });
   };
-
-  const handleRegister = (values) => {
-    auth
-      .register(values)
-      .then((res) => {
-        setSuccess(true);
-        setInfoTooltipOpen(true);
-        navigate("/sign-in", { replace: true });
-      })
-      .catch((err) => {
-        setSuccess(false);
-        setInfoTooltipOpen(true);
-        console.log(err);
-      });
-  };
-
-  const handleLogin = ({ password, email }) => {
-    auth
-      .login({ password, email })
-      .then((data) => {
-        localStorage.setItem("jwt", data.token);
-        setLoggedIn(true);
-        navigate("/", { replace: true });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  React.useEffect(() => {
-    const tokenCheck = () => {
-      if (localStorage.getItem("jwt")) {
-        const jwt = localStorage.getItem("jwt");
-        auth
-          .checkToken(jwt)
-          .then((res) => {
-            if (res) {
-              setLoggedIn(true);
-              navigate("/", { replace: true });
-              localStorage.setItem("email", res.email);
-            }
-          })
-          .catch((err) => console.log(err));
-      }
-    };
-    tokenCheck();
-  }, [navigate]);
 
   const handleSignOut = () => {
     localStorage.removeItem("jwt");

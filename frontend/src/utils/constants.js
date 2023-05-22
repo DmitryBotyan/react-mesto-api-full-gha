@@ -12,3 +12,5 @@ export const configApi = {
     Authorization: `Bearer ${localStorage.getItem("jwt")}`
   },
 };
+
+export const BASE_URL = "https://api.mestoo.students.nomoredomains.monster";
